@@ -3,6 +3,7 @@ import axios from 'axios';
 import Button from 'components/Button';
 import Loader from 'components/Loader';
 import MercatorProjection from 'components/MercatorProjection';
+import Scoreboard from 'components/Scoreboard';
 import React, { ReactElement, useEffect, useMemo, useState } from 'react';
 
 export type Country = {
@@ -77,6 +78,7 @@ const Card = (): ReactElement => {
           <h1 className="text-xl capitalize text-white underline underline-offset-8">
             Guess the capital!
           </h1>
+          <Scoreboard />
           <div className="relative h-40 w-full rounded-lg">
             <h2 className="absolute left-4 top-4 z-50 text-sm text-green-500">
               {selectedCountries.randomCountry.name}
