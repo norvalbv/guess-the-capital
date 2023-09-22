@@ -42,6 +42,18 @@ const Card = (): ReactElement => {
     }
   }, [data]);
 
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    if (data) {
+      const timer = setTimeout(() => setLoaded(true), 1250);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [data]);
+
   if (data?.error) {
     return <div>Error</div>;
   }
@@ -60,45 +72,57 @@ const Card = (): ReactElement => {
 
   return (
     <div className="flex max-w-sm flex-col items-center justify-center gap-8 rounded-lg border border-gray-200 bg-white px-2 py-4 shadow dark:border-gray-700 dark:bg-gray-800">
-      <div className="h-40 w-full rounded-lg">
-        <ParentSize className="min-w-0 overflow-hidden">
-          {({ width, height }): ReactElement | null => (
-            <MercatorProjection
-              width={width}
-              height={height}
-              data={[selectedCountries.randomCountry].map((d) => {
-                return {
-                  code: d.iso3,
-                  value: 0,
-                  fill: 'fill-purple-300',
-                };
-              })}
-            />
-          )}
-        </ParentSize>
-      </div>
-      <div className="flex flex-wrap items-center justify-center gap-4">
-        {selectedCountries.randomIndexes.map((d) => {
-          const country = data.data[d];
-          return (
-            <Button
-              key={d}
-              text={country.capital}
-              onclick={(): void => setSelected(country.capital)}
-              colour={
-                selected !== country.capital
-                  ? ''
-                  : selected === selectedCountries.randomCountry.capital
-                  ? 'from-green-500 to-blue-500 focus:ring-green-200 group-hover:from-green-500 group-hover:to-green-500 dark:focus:ring-green-800'
-                  : 'from-red-500 to-pink-500 focus:ring-red-200 group-hover:from-red-500 group-hover:to-pink-500 dark:focus:ring-red-800'
-              }
-              className={
-                selected === country.capital ? 'scale-[1.15] transition-all duration-200' : ''
-              }
-            />
-          );
-        })}
-      </div>
+      {loaded ? (
+        <>
+          <h1 className="text-xl capitalize text-white underline underline-offset-8">
+            Guess the capital!
+          </h1>
+          <div className="relative h-40 w-full rounded-lg">
+            <h2 className="absolute left-4 top-4 z-50 text-sm text-green-500">
+              {selectedCountries.randomCountry.name}
+            </h2>
+            <ParentSize className="min-w-0 overflow-hidden rounded-lg">
+              {({ width, height }): ReactElement | null => (
+                <MercatorProjection
+                  width={width}
+                  height={height}
+                  data={[selectedCountries.randomCountry].map((d) => {
+                    return {
+                      code: d.iso3,
+                      value: 0,
+                      fill: 'fill-purple-300',
+                    };
+                  })}
+                />
+              )}
+            </ParentSize>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            {selectedCountries.randomIndexes.map((d) => {
+              const country = data.data[d];
+              return (
+                <Button
+                  key={d}
+                  text={country.capital}
+                  onclick={(): void => setSelected(country.capital)}
+                  colour={
+                    selected !== country.capital
+                      ? ''
+                      : selected === selectedCountries.randomCountry.capital
+                      ? 'from-green-500 to-blue-500 focus:ring-green-200 group-hover:from-green-500 group-hover:to-green-500 dark:focus:ring-green-800'
+                      : 'from-red-500 to-pink-500 focus:ring-red-200 group-hover:from-red-500 group-hover:to-pink-500 dark:focus:ring-red-800'
+                  }
+                  className={
+                    selected === country.capital ? 'scale-[1.15] transition-all duration-200' : ''
+                  }
+                />
+              );
+            })}
+          </div>
+        </>
+      ) : (
+        <h1>Can you guess the capital?</h1>
+      )}
     </div>
   );
 };
