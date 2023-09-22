@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Button from 'components/Button';
+import Loader from 'components/Loader';
 import MercatorProjection from 'components/MercatorProjection';
 import React, { ReactElement, useEffect, useMemo, useState } from 'react';
 
@@ -45,7 +46,7 @@ const Card = (): ReactElement => {
   }
 
   if (!data || !selectedCountries) {
-    return <div>Loading</div>;
+    return <Loader />;
   }
 
   return (
