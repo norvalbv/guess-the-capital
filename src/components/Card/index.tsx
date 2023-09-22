@@ -51,7 +51,7 @@ const Card = (): ReactElement => {
 
   return (
     <div className="flex max-w-sm flex-col items-center justify-center gap-8 rounded-lg border border-gray-200 bg-white px-2 py-4 shadow dark:border-gray-700 dark:bg-gray-800">
-      <MercatorProjection country={selectedCountries.randomCountry} />
+      <MercatorProjection data={selectedCountries.randomCountry} />
       <div className="flex flex-wrap items-center justify-center gap-4">
         {selectedCountries.randomIndexes.map((d) => {
           const country = data.data[d];
