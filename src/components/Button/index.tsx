@@ -1,14 +1,26 @@
+import classNames from 'components/utils/classNames';
 import React, { ReactElement } from 'react';
 
 type ButtonProps = {
   text: string;
+  className?: string;
   onclick: () => void;
+  colour?: string;
 };
 
-const Button = ({ text, onclick }: ButtonProps): ReactElement => {
+const Button = ({
+  className,
+  colour = 'from-purple-500 to-pink-500 focus:ring-purple-200 group-hover:from-purple-500 group-hover:to-pink-500 dark:focus:ring-purple-800',
+  text,
+  onclick,
+}: ButtonProps): ReactElement => {
   return (
     <button
-      className="group mb-2 mr-2 inline-flex items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 p-0.5 text-sm font-medium text-gray-900 hover:text-white focus:outline-none focus:ring-4 focus:ring-purple-200 group-hover:from-purple-500 group-hover:to-pink-500 dark:text-white dark:focus:ring-purple-800"
+      className={classNames(
+        colour,
+        className,
+        'group mb-2 mr-2 inline-flex items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br p-0.5 text-sm font-medium text-gray-900 hover:text-white focus:outline-none focus:ring dark:text-white '
+      )}
       type="button"
       onClick={onclick}
     >
