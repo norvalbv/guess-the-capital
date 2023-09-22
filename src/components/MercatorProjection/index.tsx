@@ -84,15 +84,15 @@ const MercatorProjection = ({
               {mercator.features.map(({ feature, path }) => {
                 const country = data.find((country) => country.code === feature.id);
 
-                const fill = country?.fill || 'fill-neutral-N100';
+                const fill = country?.fill || 'bg-green-500';
 
                 return (
                   <path
                     key={feature.id}
                     id={feature.id}
                     d={path || ''}
-                    className={classNames(fill, 'hover:fill-primary-P500 stroke-1 transition')}
-                    stroke="rgba(0, 0, 0, 0.1)" // Country/state border colour
+                    className={classNames(fill, 'stroke-1 transition hover:fill-red-100')}
+                    stroke="#FF00FF" // Country/state border colour
                   />
                 );
               })}

@@ -50,17 +50,33 @@ const Card = (): ReactElement => {
     return <Loader />;
   }
 
+  //   const mercatorProjectionData = data.data.map(({ iso3 }) => {
+  //     return {
+  //       code: iso3,
+  //       value: 0,
+  //       fill: 'fill-red-500',
+  //     };
+  //   });
+
   return (
     <div className="flex max-w-sm flex-col items-center justify-center gap-8 rounded-lg border border-gray-200 bg-white px-2 py-4 shadow dark:border-gray-700 dark:bg-gray-800">
-      <ParentSize className="min-w-0 overflow-hidden">
-        {({ width, height }): ReactElement | null => (
-          <MercatorProjection
-            width={width}
-            height={height}
-            // data={mercatorProjectionData}
-          />
-        )}
-      </ParentSize>
+      <div className="h-40 w-full rounded-lg">
+        <ParentSize className="min-w-0 overflow-hidden">
+          {({ width, height }): ReactElement | null => (
+            <MercatorProjection
+              width={width}
+              height={height}
+              data={[selectedCountries.randomCountry].map((d) => {
+                return {
+                  code: d.iso3,
+                  value: 0,
+                  fill: 'fill-purple-300',
+                };
+              })}
+            />
+          )}
+        </ParentSize>
+      </div>
       <div className="flex flex-wrap items-center justify-center gap-4">
         {selectedCountries.randomIndexes.map((d) => {
           const country = data.data[d];
