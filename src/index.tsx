@@ -4,16 +4,16 @@ import App from './App';
 import 'styles/index.css';
 
 // we data from an API that is in the following type:
-type CountryData = {
-  data: {
-    name: string;
-    capital: string;
-    iso2: string;
-    iso3: string;
-  }[];
-  error: boolean;
-  msg: string;
-};
+
+// There are approximately 250 objects in the array
+
+// We then need to pick at random a country and display that country, either as an image, flag, or text.
+// Picking three random capital cities from the object, display them. However, one must be the correct city.
+// User picks the city that is the capital of the country
+// If correct the user will gain score, else lose it.
+
+// ! The user should continue unless the user quits (but I will set an explicit score in the app that the user can define)
+// ! needs to be responsive
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
