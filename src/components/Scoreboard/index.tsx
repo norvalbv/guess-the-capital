@@ -1,26 +1,10 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement } from 'react';
 
 type ScoreboardProps = {
-  didWin: boolean;
+  score: { win: number; lose: number };
 };
 
-const Scoreboard = ({ didWin }: ScoreboardProps): ReactElement => {
-  const [score, setScore] = useState({
-    win: 0,
-    lose: 0,
-  });
-
-  useEffect(() => {
-    if (typeof didWin === 'boolean') {
-      return didWin
-        ? setScore((prev) => {
-            return { ...prev, win: prev.win + 1 };
-          })
-        : setScore((prev) => {
-            return { ...prev, win: prev.lose + 1 };
-          });
-    }
-  }, [didWin]);
+const Scoreboard = ({ score }: ScoreboardProps): ReactElement => {
   return (
     <section className="text-sm text-white">
       Win: <span className="text-green-300">{score.win}</span> | Lose:{' '}

@@ -20,6 +20,8 @@ type CountryData = {
   msg: string;
 };
 
+const getRandomIndex = (length: number): number => Math.floor(Math.random() * length);
+
 const Card = (): ReactElement => {
   const [data, setData] = useState<CountryData | null>(null);
   useEffect(() => {
@@ -35,10 +37,10 @@ const Card = (): ReactElement => {
       // Get three random values (indexes) of the data array.
       const randomIndexes = Array(3)
         .fill(null)
-        .map(() => Math.floor(Math.random() * data.data.length));
+        .map(() => getRandomIndex(data.data.length));
 
       // select random country from the given random index array
-      const randomCountry = data.data[Math.ceil(Math.random() * randomIndexes.length)];
+      const randomCountry = data.data[randomIndexes[getRandomIndex(randomIndexes.length)]];
 
       return { randomIndexes, randomCountry };
     }
@@ -56,6 +58,11 @@ const Card = (): ReactElement => {
     }
   }, [data]);
 
+  const [score, setScore] = useState({
+    win: 0,
+    lose: 0,
+  });
+
   if (data?.error) {
     return <div>Error</div>;
   }
@@ -63,6 +70,20 @@ const Card = (): ReactElement => {
   if (!data || !selectedCountries) {
     return <Loader />;
   }
+
+  const handleChosenCapital = (capital: string): void => {
+    setSelected(capital);
+
+    if (capital === selectedCountries.randomCountry.capital) {
+      setScore((prev) => {
+        return { ...prev, win: prev.win + 1 };
+      });
+    } else {
+      setScore((prev) => {
+        return { ...prev, lose: prev.lose + 1 };
+      });
+    }
+  };
 
   //   const mercatorProjectionData = data.data.map(({ iso3 }) => {
   //     return {
@@ -77,7 +98,7 @@ const Card = (): ReactElement => {
       {loaded ? (
         <>
           <div className="flex w-full items-center justify-between">
-            <Scoreboard didWin={false} />
+            <Scoreboard score={score} />
             <CogIcon />
           </div>
           <div className="relative h-40 w-full rounded-lg">
@@ -107,7 +128,7 @@ const Card = (): ReactElement => {
                 <Button
                   key={d}
                   text={country.capital}
-                  onclick={(): void => setSelected(country.capital)}
+                  onclick={(): void => handleChosenCapital(country.capital)}
                   colour={
                     selected !== country.capital
                       ? ''
