@@ -150,6 +150,7 @@ const Card = (): ReactElement => {
               <Button text="Reset Game" onclick={(): void => setScore({ win: 0, lose: 0 })} />
             </>
           ) : (
+            // TODO Fix so we can have infinite games (set to 0)
             <GameSettings
               settings={{
                 'total rounds': (
