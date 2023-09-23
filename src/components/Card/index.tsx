@@ -44,18 +44,21 @@ const Card = (): ReactElement => {
 
   useEffect(() => {
     if (selected) {
-      const timer = setTimeout(() => {
-        setSelected('');
-        if (selected === selectedCountries?.randomCountry.capital) {
-          setScore((prev) => {
-            return { ...prev, win: prev.win + 1 };
-          });
-        } else {
-          setScore((prev) => {
-            return { ...prev, lose: prev.lose + 1 };
-          });
-        }
-      }, 500);
+      const timer = setTimeout(
+        () => {
+          setSelected('');
+          if (selected === selectedCountries?.randomCountry.capital) {
+            setScore((prev) => {
+              return { ...prev, win: prev.win + 1 };
+            });
+          } else {
+            setScore((prev) => {
+              return { ...prev, lose: prev.lose + 1 };
+            });
+          }
+        },
+        selected === selectedCountries?.randomCountry.capital ? 750 : 1500
+      );
 
       return () => {
         clearTimeout(timer);
@@ -91,7 +94,7 @@ const Card = (): ReactElement => {
   const totalScore = Object.values(score).reduce((a, b) => a + b);
 
   return (
-    <div className="relative flex h-auto w-80 flex-col items-center gap-8 rounded-lg border border-gray-200 bg-white p-2 shadow dark:border-gray-700 dark:bg-gray-800 sm:h-96 sm:w-[28rem]">
+    <div className="relative flex h-auto w-80 flex-col items-center gap-8 rounded-lg border border-gray-700 bg-gray-800 p-2 shadow sm:w-[28rem]">
       {totalScore < totalRounds ? (
         <>
           <div className="flex w-full items-center justify-between">
@@ -123,30 +126,36 @@ const Card = (): ReactElement => {
                   )}
                 </ParentSize>
               </div>
-              <div className="flex flex-wrap items-center justify-center gap-4">
-                {selectedCountries.randomIndexes.map((d) => {
-                  const country = data.data[d];
-                  return (
-                    <Button
-                      key={d}
-                      text={country.capital}
-                      onclick={(): void => setSelected(country.capital)}
-                      colour={
-                        selected !== country.capital
-                          ? ''
-                          : selected === selectedCountries.randomCountry.capital
-                          ? 'from-green-500 to-blue-500 focus:ring-green-200 group-hover:from-green-500 group-hover:to-green-500 dark:focus:ring-green-800'
-                          : 'from-red-500 to-pink-500 focus:ring-red-200 group-hover:from-red-500 group-hover:to-pink-500 dark:focus:ring-red-800'
-                      }
-                      className={
-                        selected === country.capital
-                          ? 'scale-[1.15] transition-all duration-200'
-                          : ''
-                      }
-                    />
-                  );
-                })}
-              </div>
+              <section className="text-center text-white sm:text-left">
+                <p>What&apos;s the capital city of {selectedCountries.randomCountry.name}?</p>
+                <div className="my-3 flex flex-wrap items-center justify-center gap-6">
+                  {selectedCountries.randomIndexes.map((d) => {
+                    const country = data.data[d];
+                    return (
+                      <Button
+                        key={d}
+                        text={country.capital}
+                        onclick={(): void => setSelected(country.capital)}
+                        colour={
+                          selected !== country.capital
+                            ? ''
+                            : selected === selectedCountries.randomCountry.capital
+                            ? 'from-green-500 to-blue-500 group-hover:from-green-500 group-hover:to-green-500 focus:ring-green-800'
+                            : 'from-red-500 to-pink-500 group-hover:from-red-500 group-hover:to-pink-500 focus:ring-red-800'
+                        }
+                        className={
+                          selected === country.capital
+                            ? 'scale-[1.15] transition-all duration-200'
+                            : ''
+                        }
+                      />
+                    );
+                  })}
+                </div>
+                {selected && selected !== selectedCountries.randomCountry.capital && (
+                  <p>The correct city was {selectedCountries.randomCountry.capital}</p>
+                )}
+              </section>
               <Button text="Reset Game" onclick={(): void => setScore({ win: 0, lose: 0 })} />
             </>
           ) : (
