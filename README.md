@@ -39,5 +39,12 @@ Open `http://localhost:7777` in your browser. (You can change the port in `vite.
 
 and more!
 
+## 
+
+To Test the app, run:
+```Bash
+yarn test
+```
+
 
 **Enjoy quizzing!**
