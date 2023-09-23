@@ -1,5 +1,4 @@
 import { ParentSize } from '@visx/responsive';
-import axios from 'axios';
 import Button from 'components/Button';
 import GameSettings from 'components/GameSettings';
 import Loader from 'components/Loader';
@@ -7,6 +6,7 @@ import MercatorProjection from 'components/MercatorProjection';
 import { CogIcon } from 'components/SVG';
 import Scoreboard from 'components/Scoreboard';
 import React, { ReactElement, useEffect, useMemo, useState } from 'react';
+import { useGetCountries } from 'services';
 
 export type Country = {
   name: string;
@@ -15,22 +15,11 @@ export type Country = {
   iso3: string;
 };
 
-type CountryData = {
-  data: Country[];
-  error: boolean;
-  msg: string;
-};
-
 const getRandomIndex = (length: number): number => Math.floor(Math.random() * length);
 
 const Card = (): ReactElement => {
-  const [data, setData] = useState<CountryData | null>(null);
-  useEffect(() => {
-    axios('https://countriesnow.space/api/v0.1/countries/capital')
-      // TODO fix assertion
-      .then((res) => setData(res.data as CountryData))
-      .catch(() => {});
-  }, []);
+  const { data } = useGetCountries();
+
   const [selected, setSelected] = useState('');
 
   const [score, setScore] = useState({
@@ -52,18 +41,6 @@ const Card = (): ReactElement => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, score]);
-
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    if (data) {
-      const timer = setTimeout(() => setLoaded(true), 1250);
-
-      return () => {
-        clearTimeout(timer);
-      };
-    }
-  }, [data]);
 
   useEffect(() => {
     if (selected) {
