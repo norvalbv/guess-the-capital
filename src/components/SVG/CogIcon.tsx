@@ -1,6 +1,6 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, SVGProps } from 'react';
 
-const CogIcon = (): ReactElement => {
+const CogIcon = (props: SVGProps<SVGSVGElement>): ReactElement => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -9,6 +9,7 @@ const CogIcon = (): ReactElement => {
       strokeWidth={0.5}
       stroke="currentColor"
       className="h-7 w-7"
+      {...props}
     >
       <path
         strokeLinecap="round"
