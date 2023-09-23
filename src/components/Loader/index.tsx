@@ -1,4 +1,4 @@
-import LoadingIcon from 'components/SVG/LoadingIcon';
+import { LoadingIcon } from 'components/SVG';
 import React, { ReactElement } from 'react';
 
 const Loader = (): ReactElement => {

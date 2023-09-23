@@ -3,6 +3,7 @@ import axios from 'axios';
 import Button from 'components/Button';
 import Loader from 'components/Loader';
 import MercatorProjection from 'components/MercatorProjection';
+import { CogIcon } from 'components/SVG';
 import Scoreboard from 'components/Scoreboard';
 import React, { ReactElement, useEffect, useMemo, useState } from 'react';
 
@@ -37,7 +38,7 @@ const Card = (): ReactElement => {
         .map(() => Math.floor(Math.random() * data.data.length));
 
       // select random country from the given random index array
-      const randomCountry = data.data[Math.floor(Math.random() * randomIndexes.length)];
+      const randomCountry = data.data[Math.ceil(Math.random() * randomIndexes.length)];
 
       return { randomIndexes, randomCountry };
     }
@@ -72,13 +73,13 @@ const Card = (): ReactElement => {
   //   });
 
   return (
-    <div className="flex max-w-sm flex-col items-center justify-center gap-8 rounded-lg border border-gray-200 bg-white px-2 py-4 shadow dark:border-gray-700 dark:bg-gray-800">
+    <div className="relative flex max-w-sm flex-col items-center justify-center gap-8 rounded-lg border border-gray-200 bg-white px-2 py-4 shadow dark:border-gray-700 dark:bg-gray-800">
       {loaded ? (
         <>
-          <h1 className="text-xl capitalize text-white underline underline-offset-8">
-            Guess the capital!
-          </h1>
-          <Scoreboard />
+          <div className="flex w-full items-center justify-between">
+            <Scoreboard didWin={false} />
+            <CogIcon />
+          </div>
           <div className="relative h-40 w-full rounded-lg">
             <h2 className="absolute left-4 top-4 z-50 text-sm text-green-500">
               {selectedCountries.randomCountry.name}
