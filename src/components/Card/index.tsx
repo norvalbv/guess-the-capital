@@ -1,5 +1,6 @@
 import { ParentSize } from '@visx/responsive';
 import Button from 'components/Button';
+import { ErrorBanner } from 'components/ErrorBoundary';
 import GameSettings from 'components/GameSettings';
 import Loader from 'components/Loader';
 import MercatorProjection from 'components/MercatorProjection';
@@ -71,9 +72,8 @@ const Card = (): ReactElement => {
 
   const [totalRounds, setTotalRounds] = useState(10);
 
-  // TODO actually do an error boundary
   if (data?.error) {
-    return <div>Error</div>;
+    return <ErrorBanner />;
   }
 
   if (!data || !selectedCountries) {

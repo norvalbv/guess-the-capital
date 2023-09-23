@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, useCallback } from 'react';
+import React, { ReactElement, ReactNode, useCallback } from 'react';
 import { ErrorBoundary as ErrorBounds } from 'react-error-boundary';
 import classNames from 'utils/classNames';
 
@@ -11,7 +11,7 @@ export const ErrorBanner = ({ className, errorMessage }: ErrorBannerProps): Reac
   return (
     <div
       role="alert"
-      className={classNames('flex items-center gap-4 rounded-lg bg-red-R400 px-4 py-2', className)}
+      className={classNames('flex items-center gap-4 rounded-lg bg-red-400 px-4 py-2', className)}
     >
       <b>
         {errorMessage ||
@@ -21,7 +21,7 @@ export const ErrorBanner = ({ className, errorMessage }: ErrorBannerProps): Reac
       <button
         onClick={(): void => window.location.reload()}
         type="button"
-        className="rounded border border-neutral-N500 px-4 py-2 hover:underline"
+        className="rounded border border-neutral-500 px-4 py-2 hover:underline"
       >
         Try again
       </button>
