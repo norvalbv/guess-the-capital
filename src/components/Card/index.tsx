@@ -32,6 +32,11 @@ const Card = (): ReactElement => {
   }, []);
   const [selected, setSelected] = useState('');
 
+  const [score, setScore] = useState({
+    win: 0,
+    lose: 0,
+  });
+
   const selectedCountries = useMemo(() => {
     if (data) {
       // Get three random values (indexes) of the data array.
@@ -44,7 +49,8 @@ const Card = (): ReactElement => {
 
       return { randomIndexes, randomCountry };
     }
-  }, [data]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, score]);
 
   const [loaded, setLoaded] = useState(false);
 
@@ -58,10 +64,27 @@ const Card = (): ReactElement => {
     }
   }, [data]);
 
-  const [score, setScore] = useState({
-    win: 0,
-    lose: 0,
-  });
+  useEffect(() => {
+    if (selected) {
+      const timer = setTimeout(() => {
+        setSelected('');
+        if (selected === selectedCountries?.randomCountry.capital) {
+          setScore((prev) => {
+            return { ...prev, win: prev.win + 1 };
+          });
+        } else {
+          setScore((prev) => {
+            return { ...prev, lose: prev.lose + 1 };
+          });
+        }
+      }, 500);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected]);
 
   if (data?.error) {
     return <div>Error</div>;
@@ -70,20 +93,6 @@ const Card = (): ReactElement => {
   if (!data || !selectedCountries) {
     return <Loader />;
   }
-
-  const handleChosenCapital = (capital: string): void => {
-    setSelected(capital);
-
-    if (capital === selectedCountries.randomCountry.capital) {
-      setScore((prev) => {
-        return { ...prev, win: prev.win + 1 };
-      });
-    } else {
-      setScore((prev) => {
-        return { ...prev, lose: prev.lose + 1 };
-      });
-    }
-  };
 
   //   const mercatorProjectionData = data.data.map(({ iso3 }) => {
   //     return {
@@ -128,7 +137,7 @@ const Card = (): ReactElement => {
                 <Button
                   key={d}
                   text={country.capital}
-                  onclick={(): void => handleChosenCapital(country.capital)}
+                  onclick={(): void => setSelected(country.capital)}
                   colour={
                     selected !== country.capital
                       ? ''
