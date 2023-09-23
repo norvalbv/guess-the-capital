@@ -1,4 +1,4 @@
-import axios, { AxiosError, RawAxiosRequestHeaders } from 'axios';
+import axios, { AxiosError } from 'axios';
 import { ApiError } from 'types';
 
 export type FetcherOptions = {
@@ -6,20 +6,12 @@ export type FetcherOptions = {
 };
 type UseFetcherProps = {
   pathName: string;
-  fetcherOptions?: FetcherOptions;
   params?: URLSearchParams;
 };
 
-const useFetcher = <T>({ pathName, fetcherOptions, params }: UseFetcherProps): Promise<T> => {
-  const headers: RawAxiosRequestHeaders | undefined = fetcherOptions ? {} : undefined;
-
-  if (headers && !fetcherOptions?.cache) {
-    // The Cache-Control HTTP header field holds instructions — in both requests and responses.
-    headers['Cache-Control'] = 'no-cache';
-  }
-
+const useFetcher = <T>({ pathName, params }: UseFetcherProps): Promise<T> => {
   return axios
-    .get<T>(pathName, { headers, params })
+    .get<T>(pathName, { params })
     .then((res) => res.data)
     .catch((error: Error | AxiosError<{ detail: string }>) => {
       const err = <ApiError>{};

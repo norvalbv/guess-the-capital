@@ -68,6 +68,7 @@ const Card = (): ReactElement => {
 
   const [totalRounds, setTotalRounds] = useState(10);
 
+  // TODO actually do an error boundary
   if (data?.error) {
     return <div>Error</div>;
   }
@@ -83,6 +84,9 @@ const Card = (): ReactElement => {
   //       fill: 'fill-red-500',
   //     };
   //   });
+
+  // TODO Need to display the correct capital if the user is incorrect.
+  // TODO Write tests
 
   const totalScore = Object.values(score).reduce((a, b) => a + b);
 
