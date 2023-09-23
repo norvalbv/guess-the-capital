@@ -30,7 +30,10 @@
       {
         "devDependencies": [
           "src/globals.d.ts",
-          "**/*.config.{js,ts}" // configs
+          "**/*.config.{js,ts}", // configs
+          "src/setupTests.ts", // jest setup
+          "src/utils/testUtils.tsx", // jest utils
+          "**/*.test.{js,jsx,ts,tsx}" // tests where the extension or filename suffix denotes that it is a test
         ],
         "optionalDependencies": false
       }

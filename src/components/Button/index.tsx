@@ -1,4 +1,4 @@
-import classNames from 'components/utils/classNames';
+import classNames from 'utils/classNames';
 import React, { ReactElement } from 'react';
 
 type ButtonProps = {

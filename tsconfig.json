@@ -18,5 +18,5 @@
     "target": "es6",
     "types": ["vite/client"]
   },
-  "include": ["src", "tailwind.config.js", "vite.config.ts"]
+  "include": ["src", "tailwind.config.js", "vite.config.ts", "jest.config.ts"]
 }

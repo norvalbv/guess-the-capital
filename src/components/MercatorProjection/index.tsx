@@ -2,7 +2,7 @@ import React, { ReactElement, ReactNode, useMemo } from 'react';
 import { Mercator } from '@visx/geo';
 import { feature } from 'topojson-client';
 import topology from 'constants/worldTopo.json';
-import classNames from 'components/utils/classNames';
+import classNames from 'utils/classNames';
 
 type Geometry = {
   coordinates: [number, number][][];
