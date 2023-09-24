@@ -9,6 +9,8 @@ import Scoreboard from 'components/Scoreboard';
 import React, { ReactElement, useEffect, useMemo, useState } from 'react';
 import { useGetCountries } from 'services';
 import classNames from 'utils/classNames';
+import boop from 'assets/boop.mp3';
+import energy from 'assets/energy.mp3';
 
 const getRandomIndex = (length: number): number => Math.floor(Math.random() * length);
 
@@ -48,6 +50,17 @@ const Card = (): ReactElement => {
 
   useEffect(() => {
     if (selected) {
+      const boopSound = new Audio(boop);
+      const energySound = new Audio(energy);
+
+      if (settings.sounds) {
+        if (selected === selectedCountries?.randomCountry.capital) {
+          energySound.play().catch(() => {});
+        } else {
+          boopSound.play().catch(() => {});
+        }
+      }
+
       const timer = setTimeout(
         () => {
           setSelected('');

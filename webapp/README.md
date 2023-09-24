@@ -12,9 +12,9 @@ Guess The Capital Quiz is a web application that tests your knowledge about worl
     ```bash
     git clone https://github.com/norvalbv/guess-the-capital
     ```
-2. Navigate into the project directory
+2. Navigate into the project's directory webapp
     ```bash
-    cd guess-the-capital
+    cd guess-the-capital/webapp
     ```
 3. Install the dependencies
     ```bash
@@ -36,6 +36,7 @@ Open `http://localhost:7777` in your browser. (You can change the port in `vite.
 - SWR
 - Axios
 - Yarn
+- Visx (a D3 wrapper)
 
 and more!
 
