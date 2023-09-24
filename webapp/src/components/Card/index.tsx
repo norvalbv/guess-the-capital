@@ -155,7 +155,11 @@ const Card = (): ReactElement => {
                   <p>The correct city was {selectedCountries.randomCountry.capital}</p>
                 )}
               </section>
-              <Button text="Reset Game" onclick={(): void => setScore({ win: 0, lose: 0 })} />
+              <Button
+                text="Reset Game"
+                onclick={(): void => setScore({ win: 0, lose: 0 })}
+                disabled={!!selected}
+              />
             </>
           ) : (
             <GameSettings

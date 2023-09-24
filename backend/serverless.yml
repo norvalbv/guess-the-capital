@@ -1,0 +1,16 @@
+service: guess-the-capital-backend
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+functions:
+  getCapital:
+    handler: handler.getCapital
+    events:
+      - http:
+          path: capital
+          method: get
+
+plugins:
+  - serverless-offline
