@@ -8,6 +8,7 @@ import { CogIcon } from 'components/SVG';
 import Scoreboard from 'components/Scoreboard';
 import React, { ReactElement, useEffect, useMemo, useState } from 'react';
 import { useGetCountries } from 'services';
+import classNames from 'utils/classNames';
 
 const getRandomIndex = (length: number): number => Math.floor(Math.random() * length);
 
@@ -20,6 +21,10 @@ const Card = (): ReactElement => {
     win: 0,
     lose: 0,
   });
+  const [maxScore, setMaxScore] = useState(1);
+
+  const hasWon = score.win >= maxScore;
+  const hasLost = score.lose >= maxScore;
 
   const selectedCountries = useMemo(() => {
     if (data) {
@@ -63,8 +68,6 @@ const Card = (): ReactElement => {
 
   const [stage, setStage] = useState<0 | 1>(0);
 
-  const [totalRounds, setTotalRounds] = useState(10);
-
   if (data?.error) {
     return <ErrorBanner />;
   }
@@ -81,14 +84,9 @@ const Card = (): ReactElement => {
   //     };
   //   });
 
-  // TODO Need to display the correct capital if the user is incorrect.
-  // TODO Write tests
-
-  const totalScore = Object.values(score).reduce((a, b) => a + b);
-
   return (
     <div className="relative flex h-auto w-80 flex-col items-center gap-8 rounded-lg border border-gray-700 bg-gray-800 p-2 shadow sm:w-[28rem]">
-      {totalScore < totalRounds ? (
+      {!hasWon && !hasLost ? (
         <>
           <div className="flex w-full items-center justify-between">
             <Scoreboard score={score} />
@@ -128,6 +126,7 @@ const Card = (): ReactElement => {
                       <Button
                         key={d}
                         text={country.capital}
+                        disabled={!!selected}
                         onclick={(): void => setSelected(country.capital)}
                         colour={
                           selected !== country.capital
@@ -155,19 +154,20 @@ const Card = (): ReactElement => {
             // TODO Fix so we can have infinite games (set to 0)
             <GameSettings
               settings={{
-                'total rounds': (
+                'Max win/loss': (
                   <input
                     className="rounded-lg px-2 text-gray-500"
-                    value={totalRounds}
-                    onChange={(e): void => setTotalRounds(Number(e.target.value))}
+                    type="number"
+                    value={maxScore}
+                    onChange={(e): void => setMaxScore(Number(e.target.value))}
                   />
                 ),
                 sounds: (
                   <input
                     type="checkbox"
                     className="rounded-lg px-2 text-gray-500"
-                    value={totalRounds}
-                    onChange={(e): void => setTotalRounds(Number(e.target.value))}
+                    value={maxScore}
+                    onChange={(e): void => setMaxScore(Number(e.target.value))}
                   />
                 ),
               }}
@@ -175,9 +175,17 @@ const Card = (): ReactElement => {
           )}
         </>
       ) : (
-        <div className="grid h-full w-full place-items-center">
+        <div className="flex w-full flex-col items-center justify-center gap-20 text-center text-white">
+          <h1 className="text-2xl underline">Game Over</h1>
+          <p
+            className={classNames(
+              'text-4xl font-bold uppercase underline underline-offset-4',
+              hasWon ? 'text-green-500' : 'text-red-500'
+            )}
+          >
+            You {hasWon ? 'win' : 'lost'}!
+          </p>
           <div>
-            <h1 className="mb-10 text-2xl text-white underline">Round Over</h1>
             <Button
               text="Play again?"
               onclick={(): void => {
