@@ -9,13 +9,6 @@ import Scoreboard from 'components/Scoreboard';
 import React, { ReactElement, useEffect, useMemo, useState } from 'react';
 import { useGetCountries } from 'services';
 
-export type Country = {
-  name: string;
-  capital: string;
-  iso2: string;
-  iso3: string;
-};
-
 const getRandomIndex = (length: number): number => Math.floor(Math.random() * length);
 
 const Card = (): ReactElement => {
@@ -164,6 +157,14 @@ const Card = (): ReactElement => {
               settings={{
                 'total rounds': (
                   <input
+                    className="rounded-lg px-2 text-gray-500"
+                    value={totalRounds}
+                    onChange={(e): void => setTotalRounds(Number(e.target.value))}
+                  />
+                ),
+                sounds: (
+                  <input
+                    type="checkbox"
                     className="rounded-lg px-2 text-gray-500"
                     value={totalRounds}
                     onChange={(e): void => setTotalRounds(Number(e.target.value))}

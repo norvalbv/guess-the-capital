@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<GameSettings /> Should render with mandatory props. 1`] = `
+<section
+  className="text-white"
+>
+  <h2
+    className="mb-4 text-2xl underline"
+  >
+    Settings
+  </h2>
+  <div>
+    <span
+      className="capitalize"
+    >
+      scoreLimit
+    </span>
+     = 
+    <span>
+      10
+    </span>
+  </div>
+</section>
+`;

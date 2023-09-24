@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Button /> Should render with all props. 1`] = `
+<button
+  className="bg-red-500 text-xs group inline-flex items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br p-0.5 text-sm font-medium text-white hover:text-white focus:outline-none focus:ring "
+  onClick={[MockFunction]}
+  type="button"
+>
+  <span
+    className="rounded-md bg-gray-900 px-5 py-2.5 transition-all duration-75 ease-in group-hover:bg-opacity-[0]"
+  >
+    Test text
+  </span>
+</button>
+`;
+
+exports[`<Button /> Should render with mandatory props. 1`] = `
+<button
+  className="from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 focus:ring-purple-800 group inline-flex items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br p-0.5 text-sm font-medium text-white hover:text-white focus:outline-none focus:ring "
+  onClick={[MockFunction]}
+  type="button"
+>
+  <span
+    className="rounded-md bg-gray-900 px-5 py-2.5 transition-all duration-75 ease-in group-hover:bg-opacity-[0]"
+  >
+    Test text
+  </span>
+</button>
+`;

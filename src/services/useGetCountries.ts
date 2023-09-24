@@ -1,24 +1,18 @@
-import { Country } from 'components/Card';
 import useRequest from 'hooks/useRequest';
-import { ApiResponse } from 'types';
+import { ApiResponse, Country } from 'types';
 
-export type UseWeather = {
-  lat: number | null;
-  lon: number | null;
-};
-
-type CountryData = {
+export type CountryData = {
   data: Country[];
   error: boolean;
   msg: string;
 };
 
-export type WeatherReturnType = ApiResponse<CountryData>;
+export type UseGetCountriesReturnType = ApiResponse<CountryData>;
 
 /**
  * Get full country data
  */
-export const useGetCountries = (): WeatherReturnType => {
+export const useGetCountries = (): UseGetCountriesReturnType => {
   const url = 'https://countriesnow.space/api/v0.1/countries/capital';
 
   return useRequest({ pathName: url });

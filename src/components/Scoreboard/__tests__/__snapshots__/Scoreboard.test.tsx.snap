@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Scoreboard /> Should render with mandatory props. 1`] = `
+<section
+  className="text-sm text-white"
+>
+  Win: 
+  <span
+    className="text-green-300"
+  >
+    1
+  </span>
+   | Lose:
+   
+  <span
+    className="text-red-300"
+  >
+    1
+  </span>
+</section>
+`;

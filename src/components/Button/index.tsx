@@ -1,7 +1,7 @@
 import classNames from 'utils/classNames';
 import React, { ReactElement } from 'react';
 
-type ButtonProps = {
+export type ButtonProps = {
   text: string;
   className?: string;
   onclick: () => void;
