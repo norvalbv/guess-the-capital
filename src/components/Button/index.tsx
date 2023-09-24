@@ -5,8 +5,9 @@ export type ButtonProps = {
   className?: string;
   colour?: string;
   disabled?: boolean;
-  onclick: () => void;
+  onclick?: () => void;
   text: string;
+  type?: 'button' | 'submit';
 };
 
 const Button = ({
@@ -15,6 +16,7 @@ const Button = ({
   disabled = false,
   onclick,
   text,
+  type = 'button',
 }: ButtonProps): ReactElement => {
   return (
     <button
@@ -23,7 +25,7 @@ const Button = ({
         className,
         'group inline-flex items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br p-0.5 text-sm font-medium text-white hover:text-white focus:outline-none focus:ring '
       )}
-      type="button"
+      type={type === 'button' ? 'button' : 'submit'}
       onClick={onclick}
       disabled={disabled}
     >

@@ -1,7 +1,7 @@
 import { ParentSize } from '@visx/responsive';
 import Button from 'components/Button';
 import { ErrorBanner } from 'components/ErrorBoundary';
-import GameSettings from 'components/GameSettings';
+import GameSettings, { Settings } from 'components/GameSettings';
 import Loader from 'components/Loader';
 import MercatorProjection from 'components/MercatorProjection';
 import { CogIcon } from 'components/SVG';
@@ -21,10 +21,15 @@ const Card = (): ReactElement => {
     win: 0,
     lose: 0,
   });
-  const [maxScore, setMaxScore] = useState(1);
+  const [settings, setSettings] = useState<Settings>({
+    maxScore: 10,
+    sounds: true,
+  });
 
-  const hasWon = score.win >= maxScore;
-  const hasLost = score.lose >= maxScore;
+  const hasInfiniteGames = settings.maxScore === 0;
+
+  const hasWon = !hasInfiniteGames && score.win >= settings.maxScore;
+  const hasLost = !hasInfiniteGames && score.lose >= settings.maxScore;
 
   const selectedCountries = useMemo(() => {
     if (data) {
@@ -76,14 +81,6 @@ const Card = (): ReactElement => {
     return <Loader />;
   }
 
-  //   const mercatorProjectionData = data.data.map(({ iso3 }) => {
-  //     return {
-  //       code: iso3,
-  //       value: 0,
-  //       fill: 'fill-red-500',
-  //     };
-  //   });
-
   return (
     <div className="relative flex h-auto w-80 flex-col items-center gap-8 rounded-lg border border-gray-700 bg-gray-800 p-2 shadow sm:w-[28rem]">
       {!hasWon && !hasLost ? (
@@ -106,13 +103,10 @@ const Card = (): ReactElement => {
                     <MercatorProjection
                       width={width}
                       height={height}
-                      data={[selectedCountries.randomCountry].map((d) => {
-                        return {
-                          code: d.iso3,
-                          value: 0,
-                          fill: 'fill-purple-300',
-                        };
-                      })}
+                      data={{
+                        code: selectedCountries.randomCountry.iso3,
+                        fill: 'fill-purple-500',
+                      }}
                     />
                   )}
                 </ParentSize>
@@ -151,40 +145,33 @@ const Card = (): ReactElement => {
               <Button text="Reset Game" onclick={(): void => setScore({ win: 0, lose: 0 })} />
             </>
           ) : (
-            // TODO Fix so we can have infinite games (set to 0)
             <GameSettings
-              settings={{
-                'Max win/loss': (
-                  <input
-                    className="rounded-lg px-2 text-gray-500"
-                    type="number"
-                    value={maxScore}
-                    onChange={(e): void => setMaxScore(Number(e.target.value))}
-                  />
-                ),
-                sounds: (
-                  <input
-                    type="checkbox"
-                    className="rounded-lg px-2 text-gray-500"
-                    value={maxScore}
-                    onChange={(e): void => setMaxScore(Number(e.target.value))}
-                  />
-                ),
-              }}
+              settings={settings}
+              setSettings={setSettings}
+              setStage={setStage}
+              setScore={setScore}
             />
           )}
         </>
       ) : (
         <div className="flex w-full flex-col items-center justify-center gap-20 text-center text-white">
           <h1 className="text-2xl underline">Game Over</h1>
-          <p
-            className={classNames(
-              'text-4xl font-bold uppercase underline underline-offset-4',
-              hasWon ? 'text-green-500' : 'text-red-500'
-            )}
-          >
-            You {hasWon ? 'win' : 'lost'}!
-          </p>
+          <div>
+            <p
+              className={classNames(
+                'text-4xl font-bold uppercase underline underline-offset-4',
+                hasWon ? 'text-green-500' : 'text-red-500'
+              )}
+            >
+              You {hasWon ? 'win' : 'lost'}!
+            </p>
+            <p className="mt-2 text-sm">
+              Final score was{' '}
+              <span className="italic">
+                Win: {score.win} / Lose: {score.lose}
+              </span>
+            </p>
+          </div>
           <div>
             <Button
               text="Play again?"

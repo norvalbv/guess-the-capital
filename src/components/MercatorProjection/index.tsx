@@ -1,7 +1,7 @@
-import React, { ReactElement, ReactNode, useMemo } from 'react';
 import { Mercator } from '@visx/geo';
-import { feature } from 'topojson-client';
 import topology from 'constants/worldTopo.json';
+import React, { ReactElement, useMemo } from 'react';
+import { feature } from 'topojson-client';
 import classNames from 'utils/classNames';
 
 type Geometry = {
@@ -19,16 +19,16 @@ type FeatureShape = {
 };
 
 export type CountryData = {
+  // Must be a three letter country code, e.g., 'GBR'
   code: string;
-  value: number;
   /**
    * Tailwind class name, `fill-*`.
    */
-  fill?: string;
+  fill?: `fill-${string}`;
 };
 
 export type MercatorProjectionProps = {
-  data: CountryData[];
+  data: CountryData;
   width: number;
   height: number;
 };
@@ -46,18 +46,13 @@ const MercatorProjection = ({
   width,
   height,
 }: MercatorProjectionProps): ReactElement | null => {
-  /**
-   * Countries that have data.
-   */
-  const targetFeatures = useMemo(() => {
+  const targetCountry = useMemo(() => {
     /**
      * Topology units filtered by target country codes.
      */
     const units = {
       ...topology.objects.units,
-      geometries: topology.objects.units.geometries.filter((geometry) =>
-        data.some((country) => country.code === geometry.id)
-      ),
+      geometries: topology.objects.units.geometries.filter((geometry) => data.code === geometry.id),
     };
 
     // A TS error is expected because we cannot assert type for the imported JSON.
@@ -77,14 +72,14 @@ const MercatorProjection = ({
         <Mercator<FeatureShape>
           data={world.features}
           // Change projection scale to fit all the countries that have data
-          fitSize={[[width, height], targetFeatures]}
+          fitSize={[[width, height], targetCountry]}
         >
-          {(mercator): ReactNode => (
+          {(mercator): ReactElement => (
             <g>
               {mercator.features.map(({ feature, path }) => {
-                const country = data.find((country) => country.code === feature.id);
+                const country = data.code === feature.id;
 
-                const fill = country?.fill || 'bg-green-500';
+                const fill = country && data.fill ? data?.fill : 'bg-green-500';
 
                 return (
                   <path
