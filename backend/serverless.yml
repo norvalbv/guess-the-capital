@@ -1,15 +1,15 @@
-service: guess-the-capital-backend
+service: get-countries
 
 provider:
   name: aws
   runtime: nodejs14.x
 
 functions:
-  getCapital:
-    handler: handler.getCapital
+  getCountries:
+    handler: dataApi/getCountries.handler
     events:
       - http:
-          path: capital
+          path: get-countries
           method: get
 
 plugins:
