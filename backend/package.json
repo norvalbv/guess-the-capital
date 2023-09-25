@@ -4,12 +4,16 @@
   "description": "The backend for guess-the-capital",
   "main": "index.ts",
   "type": "module",
-  "license": "MIT",
+  "scripts": {
+    "start": "yarn run serverless offline"
+  },
   "dependencies": {
     "axios": "^1.5.0"
   },
   "devDependencies": {
     "serverless": "^3.35.2",
-    "serverless-offline": "^13.0.0"
+    "serverless-offline": "^13.0.0",
+    "serverless-plugin-typescript": "^2.1.5",
+    "typescript": "^5.2.2"
   }
 }
