@@ -12,6 +12,9 @@ Guess The Capital Quiz is a web application that tests your knowledge about worl
     ```bash
     git clone https://github.com/norvalbv/guess-the-capital
     ```
+
+**Start the webapp**
+
 2. Navigate into the project's directory webapp
     ```bash
     cd guess-the-capital/webapp
@@ -24,8 +27,24 @@ Guess The Capital Quiz is a web application that tests your knowledge about worl
     ```bash
     yarn start
     ```
-
 Open `http://localhost:7777` in your browser. (You can change the port in `vite.config.ts`)
+
+**Start the backend**
+
+5. Navigate into the project's directory backend
+    ```bash
+    cd guess-the-capital/backend
+    ```
+6. Install the dependencies
+    ```bash
+    yarn install
+    ```
+7. Run the application
+    ```bash
+    yarn start
+    ```
+
+The backend will run on port 3000.
 
 ## Built With
 
@@ -41,7 +60,7 @@ Open `http://localhost:7777` in your browser. (You can change the port in `vite.
 
 and more!
 
-## 
+## Testing
 
 To test the webapp, run:
 ```Bash

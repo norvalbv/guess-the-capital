@@ -13,9 +13,9 @@ export type UseGetCountriesReturnType = ApiResponse<CountryData>;
  * Get full country data
  */
 export const useGetCountries = (): UseGetCountriesReturnType => {
-  const url = 'https://countriesnow.space/api/v0.1/countries/capital';
+  const url = 'http://localhost:3000/dev/get-countries';
 
-  return useRequest({ pathName: url });
+  return useRequest<CountryData>({ pathName: url });
 };
 
 export default useGetCountries;
